@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" ng-app="tdfManagerApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tour de France Manager</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- PatternFly Styles -->
+    <link href="bower_components/patternfly/dist/css/patternfly.min.css" rel="stylesheet" media="screen, print">
+    <link href="bower_components/patternfly/dist/css/patternfly-additions.min.css" rel="stylesheet" media="screen, print">
+
+    <link rel="stylesheet" href="css/jumbotron.css" />
+
+    <style type="text/xss">
+        .svg-container { display: inline-block; position: relative; width: 100%; padding-bottom: 100%; vertical-align: middle; overflow: hidden; }
+    </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+                <a class="navbar-brand" href="#/">Tour de France Manager</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li uib-dropdown>
+                        <a href="" uib-dropdown-toggle><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+                        <ul uib-dropdown-menu>
+                            <li><a href="#/">Home</a></li>
+                            <li><a ng-href="#/teams">Teams</a></li>
+                            <li><a ng-href="#/stages">Stages</a></li>
+                            <li><a ng-href="#/results">Results</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Admin</li>
+                            <li><a ng-href="#/settings">Settings</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- AngularJS View-Container for the various views. -->
+    <div class="ng-view"></div>
+
+
+    <hr>
+    <footer>
+        <p>&copy; 2016 Red Hat, Inc.</p>
+    </footer>
+
+    <!-- Not using bootstrap.js, as we are using AngularJS. For bootstrap directives use ui-bootstrap. -->
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+
+    <!-- PatternFly -->
+    <!-- Not using Patternfly js as we're using AngularJS, so no jquery (on which patternfly depends).
+    <script src="bower_components/patternfly/dist/js/patternfly.min.js"></script>
+    -->
+
+    <!-- Application Config and Controllers -->
+    <script src="scripts/config.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/application.js"></script>
+    <script src="scripts/controllers/processInstances.js"></script>
+    <script src="scripts/controllers/humanTasks.js"></script>
+    <script src="scripts/controllers/goldCardOfferTask.js"></script>
+    <script src="scripts/controllers/rejectTask.js"></script>
+
+</body>
+
+
+</html>
