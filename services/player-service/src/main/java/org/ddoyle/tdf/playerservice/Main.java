@@ -1,11 +1,11 @@
-package org.ddoyle.tdf.riderservice;
+package org.ddoyle.tdf.playerservice;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ddoyle.tdf.riderservice.model.Rider;
-import org.ddoyle.tdf.riderservice.rest.RiderEndpoint;
-import org.ddoyle.tdf.riderservice.rest.RiderServiceApplication;
+import org.ddoyle.tdf.playerservice.model.Player;
+import org.ddoyle.tdf.playerservice.rest.PlayerEndpoint;
+import org.ddoyle.tdf.playerservice.rest.PlayerServiceApplication;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class Main {
 		//JAXRSArchive riderService = buildRiderServiceArchive();
 		
 		//Configure the Swarm fractions.
-		configureRiderDataSource(swarm);
+		configurePlayerDataSource(swarm);
 		
 		// Start the Swarm container and add the deployment.
 		swarm.start();
@@ -44,25 +44,25 @@ public class Main {
 
 	}
 	
-	private static JAXRSArchive buildRiderServiceArchive() {
-		JAXRSArchive riderService = ShrinkWrap.create(JAXRSArchive.class);
+	private static JAXRSArchive buildPlayerServiceArchive() {
+		JAXRSArchive playerService = ShrinkWrap.create(JAXRSArchive.class);
 		// JAXRSArchive riderService = ShrinkWrap.create(JAXRSArchive.class, "rider-service");
 
 		// Add required classes to deployment.
-		riderService.addClass(RiderServiceApplication.class);
-		riderService.addClass(RiderEndpoint.class);
-		riderService.addClass(Rider.class);
+		playerService.addClass(PlayerServiceApplication.class);
+		playerService.addClass(PlayerEndpoint.class);
+		playerService.addClass(Player.class);
 		
-		riderService.addAsWebInfResource(
+		playerService.addAsWebInfResource(
 			      new ClassLoaderAsset("META-INF/persistence.xml", Main.class.getClassLoader()), "classes/META-INF/persistence.xml");
-		return riderService;
+		return playerService;
 		
 	}
 
-	private static Swarm configureRiderDataSource(Swarm swarm) {
+	private static Swarm configurePlayerDataSource(Swarm swarm) {
 		swarm.fraction(new DatasourcesFraction()
-			.xaDataSource("RiderServiceDS", (ds) -> {
-			ds.jndiName("java:jboss/datasources/RiderServiceDS");
+			.xaDataSource("PlayerServiceDS", (ds) -> {
+			ds.jndiName("java:jboss/datasources/PlayerServiceDS");
 			ds.driverName("postgresql");
 			ds.userName("postgres");
 			ds.password("postgres");
@@ -70,7 +70,7 @@ public class Main {
 			List<XADatasourceProperties> xaDatasourceProperties = new ArrayList<>();
 			xaDatasourceProperties.add(new XADatasourceProperties("ServerName").value("localhost"));
 			xaDatasourceProperties.add(new XADatasourceProperties("PortNumber").value("5432"));
-			xaDatasourceProperties.add(new XADatasourceProperties("DatabaseName").value("tdf-rider-service"));
+			xaDatasourceProperties.add(new XADatasourceProperties("DatabaseName").value("tdf-player-service"));
 			ds.xaDatasourceProperties(xaDatasourceProperties);
 			
 		}));

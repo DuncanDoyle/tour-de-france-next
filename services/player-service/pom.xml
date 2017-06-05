@@ -8,19 +8,20 @@
 		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
-	<artifactId>rider-service</artifactId>
-	<name>Tour de France :: Rider Service</name>
+
+	<artifactId>player-service</artifactId>
+	<name>Tour de France :: Player Service</name>
 	<packaging>war</packaging>
 
 	<build>
-		<finalName>rider-service</finalName>
+		<finalName>player-service</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.wildfly.swarm</groupId>
 				<artifactId>wildfly-swarm-plugin</artifactId>
 				<version>${version.wildfly.swarm}</version>
 				<configuration>
-					<mainClass>org.ddoyle.tdf.riderservice.Main</mainClass>
+					<mainClass>org.ddoyle.tdf.playerservice.Main</mainClass>
 				</configuration>
 				<executions>
 					<execution>
@@ -34,10 +35,10 @@
 	</build>
 
 	<dependencies>
-		<!-- Model dependencies -->
+		<!-- Data model dependency -->
 		<dependency>
 			<groupId>org.ddoyle.tdf</groupId>
-			<artifactId>service-api</artifactId>	
+			<artifactId>service-api</artifactId>
 		</dependency>
 	
 		<!-- Java EE 7 dependency -->
@@ -55,10 +56,10 @@
 			<version>${version.org.postgresql}</version>
 			<scope>compile</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
+			<version>${version.org.slf4j}</version>
 			<scope>compile</scope>
 		</dependency>
 
@@ -74,6 +75,7 @@
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>jpa</artifactId>
+			<version>${version.wildfly.swarm}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
@@ -92,31 +94,5 @@
 			<artifactId>logging</artifactId>
 		</dependency>
 	</dependencies>
-
-	<profiles>
-		<profile>
-			<id>debug</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.wildfly.swarm</groupId>
-						<artifactId>wildfly-swarm-plugin</artifactId>
-						<version>${version.wildfly.swarm}</version>
-						<configuration>
-							<mainClass>org.ddoyle.tdf.riderservice.Main</mainClass>
-							<debug>8787</debug>
-						</configuration>
-						<executions>
-							<execution>
-								<goals>
-									<goal>package</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 
 </project>

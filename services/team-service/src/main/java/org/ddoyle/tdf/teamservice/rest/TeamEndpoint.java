@@ -1,4 +1,4 @@
-package org.ddoyle.tdf.riderservice.rest;
+package org.ddoyle.tdf.teamservice.rest;
 
 import java.util.Collection;
 
@@ -14,42 +14,42 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.ddoyle.tdf.riderservice.model.Rider;
-import org.ddoyle.tdf.riderservice.repository.RiderRepository;
+import org.ddoyle.tdf.teamservice.model.Team;
+import org.ddoyle.tdf.teamservice.repository.TeamRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @ApplicationScoped
 @Path("/")
-public class RiderEndpoint {
+public class TeamEndpoint {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(RiderEndpoint.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TeamEndpoint.class);
 	
 	@Inject
-	private RiderRepository riderRepository;
-	
+	private TeamRepository teamRepository;
+		
 	@GET
-	@Path("/riders")
-	public Response getRiders() {
+	@Path("/players")
+	public Response getTeams() {
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Getting all riders.");
+			LOGGER.debug("Getting all players.");
 		}
-		Collection<Rider> rider = riderRepository.getAll();
+		Collection<Team> rider = teamRepository.getAll();
 		Response response = null;
 		response = Response.ok(rider).build();
 		return response;	
 	}
 	
 	@GET
-	@Path("/rider/{rider-id}")
-	public Response getRider(@PathParam("rider-id") int riderId) {
+	@Path("/team/{team-id}")
+	public Response getRider(@PathParam("team-id") int teamId) {
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Getting rider with id: " + riderId);
+			LOGGER.debug("Getting rider with id: " + teamId);
 		}
-		Rider rider = riderRepository.get(riderId);
+		Team player = teamRepository.get(teamId);
 		Response response = null;
-		if (rider != null) {
-			response = Response.ok(rider).build();
+		if (player != null) {
+			response = Response.ok(player).build();
 		} else {
 			response = Response.status(Status.NOT_FOUND).build();
 		}
@@ -57,17 +57,21 @@ public class RiderEndpoint {
 	}
 	
 	@PUT
-	@Path("/rider/{rider-id}")
+	@Path("/team/{team-id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response saveRider(@PathParam("rider-id") int riderId, Rider rider) {
-		System.out.println("Saving rider with id: " + riderId);
-		//Validate Rider and rider-id
-		if (riderId != rider.getNumber()) {
+	public Response saveRider(@PathParam("team-id") int teamId, Team team) {
+		System.out.println("Saving rider with id: " + teamId);
+		
+		if (teamId != team.getId()) {
 			throw new IllegalArgumentException("Rider number does not match rider-id in URL.");
 		}
-		riderRepository.save(rider);
+		teamRepository.save(team);
 		return Response.ok().build();
 	}
+	
+	
+	
+	
 	
 }

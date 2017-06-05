@@ -1,4 +1,4 @@
-package org.ddoyle.tdf.riderservice.rest;
+package org.ddoyle.tdf.playerservice.rest;
 
 import java.util.Collection;
 
@@ -14,27 +14,27 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.ddoyle.tdf.riderservice.model.Rider;
-import org.ddoyle.tdf.riderservice.repository.RiderRepository;
+import org.ddoyle.tdf.playerservice.model.Player;
+import org.ddoyle.tdf.playerservice.repository.PlayerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @ApplicationScoped
 @Path("/")
-public class RiderEndpoint {
+public class PlayerEndpoint {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(RiderEndpoint.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PlayerEndpoint.class);
 	
 	@Inject
-	private RiderRepository riderRepository;
-	
+	private PlayerRepository playerRepository;
+		
 	@GET
-	@Path("/riders")
-	public Response getRiders() {
+	@Path("/players")
+	public Response getPlayers() {
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Getting all riders.");
+			LOGGER.debug("Getting all players.");
 		}
-		Collection<Rider> rider = riderRepository.getAll();
+		Collection<Player> rider = playerRepository.getAll();
 		Response response = null;
 		response = Response.ok(rider).build();
 		return response;	
@@ -46,10 +46,10 @@ public class RiderEndpoint {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Getting rider with id: " + riderId);
 		}
-		Rider rider = riderRepository.get(riderId);
+		Player player = playerRepository.get(riderId);
 		Response response = null;
-		if (rider != null) {
-			response = Response.ok(rider).build();
+		if (player != null) {
+			response = Response.ok(player).build();
 		} else {
 			response = Response.status(Status.NOT_FOUND).build();
 		}
@@ -57,17 +57,21 @@ public class RiderEndpoint {
 	}
 	
 	@PUT
-	@Path("/rider/{rider-id}")
+	@Path("/player/{player-id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response saveRider(@PathParam("rider-id") int riderId, Rider rider) {
-		System.out.println("Saving rider with id: " + riderId);
-		//Validate Rider and rider-id
-		if (riderId != rider.getNumber()) {
+	public Response saveRider(@PathParam("player-id") int playerId, Player player) {
+		System.out.println("Saving rider with id: " + playerId);
+		//Validate Player and player-id
+		if (playerId != player.getId()) {
 			throw new IllegalArgumentException("Rider number does not match rider-id in URL.");
 		}
-		riderRepository.save(rider);
+		playerRepository.save(player);
 		return Response.ok().build();
 	}
+	
+	
+	
+	
 	
 }
